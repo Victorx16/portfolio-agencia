@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio VX — Sites que trazem clientes de verdade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --fg:#F5F5F5;
+    --panel:#1A1A1A;
+    --panel-2:#141414;
+    --line:#2A2A2A;
+    --accent:#0055FF;
+    --accent-dim: rgba(0,85,255,0.12);
+    --ok:#22C55E;
+    --muted:#8A8A8A;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--fg);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  img,svg{display:block;max-width:100%;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  ::selection{background:var(--accent);color:#fff;}
+
+  :focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- utility ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:6px;height:6px;
+    background:var(--accent);
+    border-radius:1px;
+    display:inline-block;
+  }
+
+  h1,h2,h3{
+    font-family:var(--display);
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.08;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--body);
+    font-weight:600;
+    font-size:15px;
+    padding:14px 24px;
+    border-radius:8px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease, border-color .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover{ transform:translateY(-1px); background:#0048d9; }
+  .btn-primary svg{ transition:transform .15s ease; }
+  .btn-primary:hover svg{ transform:translateX(3px); }
+
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--line);
+    color:var(--fg);
+  }
+  .btn-ghost:hover{ border-color:#4a4a4a; background:var(--panel); }
+
+  section{ position:relative; }
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  header .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:68px;
+  }
+  .logo{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:-0.02em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .dot{ width:8px;height:8px;background:var(--accent);border-radius:2px; }
+  nav.links{ display:flex; gap:32px; font-size:14px; color:var(--muted); }
+  nav.links a:hover{ color:var(--fg); }
+  .header-cta{ display:flex; align-items:center; gap:20px; }
+
+  @media (max-width:860px){
+    nav.links{ display:none; }
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:96px 0 80px;
+    border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(680px 380px at 82% -10%, var(--accent-dim), transparent 60%);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:960px){
+    .hero-grid{ grid-template-columns:1fr; }
+  }
+  .hero h1{
+    font-size:clamp(34px,4.6vw,54px);
+    margin:20px 0 22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--accent);
+  }
+  .hero p.lead{
+    font-size:17px;
+    color:#C7C7C7;
+    max-width:520px;
+    margin-bottom:34px;
+  }
+  .hero-actions{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .hero-note{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+  .hero-actions{ margin-bottom:14px; }
+
+  /* mock phone / browser visual */
+  .device{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 40px 80px -30px rgba(0,85,255,0.25);
+  }
+  .device-bar{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:10px 14px;
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+  }
+  .device-bar span{ width:8px;height:8px;border-radius:50%;background:#333; }
+  .device-url{
+    margin-left:10px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    background:#0d0d0d;
+    padding:4px 10px;
+    border-radius:5px;
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .device-body{ padding:22px; }
+  .load-row{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; }
+  .load-row .label{ font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+  .load-row .value{ font-family:var(--mono); font-size:28px; color:var(--ok); font-weight:600; }
+  .bar-track{ height:6px; background:#0d0d0d; border-radius:3px; overflow:hidden; margin-bottom:10px; }
+  .bar-fill{ height:100%; background:var(--ok); border-radius:3px; width:0%; transition:width 1.1s cubic-bezier(.2,.8,.2,1); }
+  .metric-list{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:20px; }
+  .metric{ background:var(--panel-2); border:1px solid var(--line); border-radius:8px; padding:12px; }
+  .metric .k{ font-family:var(--mono); font-size:10px; color:var(--muted); text-transform:uppercase; }
+  .metric .v{ font-family:var(--mono); font-size:18px; color:var(--fg); margin-top:4px; }
+
+  /* ---------- dor ---------- */
+  .problem{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .problem-head{ max-width:640px; margin-bottom:52px; }
+  .problem-head h2{ font-size:clamp(26px,3.4vw,38px); margin-top:16px; }
+  .problem-head p{ color:#B5B5B5; margin-top:16px; font-size:16px; }
+
+  /* search simulator - signature element */
+  .simulator{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .sim-toolbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 24px;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  .sim-toolbar .q{ font-family:var(--mono); font-size:13px; color:var(--muted); }
+  .sim-toolbar .q b{ color:var(--fg); font-weight:500; }
+  .toggle{
+    display:inline-flex;
+    background:#0d0d0d;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:4px;
+    gap:2px;
+  }
+  .toggle button{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.04em;
+    padding:8px 16px;
+    border-radius:999px;
+    border:none;
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .toggle button.active{
+    background:var(--accent);
+    color:#fff;
+  }
+  .sim-results{ padding:24px; display:flex; flex-direction:column; gap:12px; min-height:280px; }
+  .result{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:14px 16px;
+    border-radius:10px;
+    border:1px solid transparent;
+    transition:all .35s ease;
+  }
+  .result .rank{ font-family:var(--mono); font-size:13px; color:var(--muted); min-width:18px; padding-top:2px; }
+  .result .rt{ font-size:14px; color:#8FA6D6; margin-bottom:3px; font-family:var(--mono); }
+  .result .rh{ font-size:15px; font-weight:600; margin-bottom:3px; }
+  .result .rd{ font-size:13px; color:var(--muted); }
+  .result.you{
+    background:rgba(34,197,94,0.07);
+    border-color:rgba(34,197,94,0.35);
+  }
+  .result.you .rh{ color:var(--fg); }
+  .result.you .tag{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--ok);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    margin-left:8px;
+    background:rgba(34,197,94,0.12);
+    padding:2px 8px;
+    border-radius:999px;
+  }
+  .sim-missing{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:10px;
+    padding:20px;
+    border:1px dashed var(--line);
+    border-radius:10px;
+    color:var(--muted);
+    font-size:13px;
+  }
+  .sim-missing b{ color:var(--fg); font-family:var(--mono); font-weight:500; }
+
+  .sim-caption{
+    padding:18px 24px;
+    border-top:1px solid var(--line);
+    font-size:13px;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+
+  /* ---------- objecoes ---------- */
+  .objections{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .obj-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    margin-top:48px;
+  }
+  @media (max-width:860px){ .obj-grid{ grid-template-columns:1fr; } }
+  .obj-card{ background:var(--panel); padding:32px; }
+  .obj-card .q{ font-size:15px; color:#A8A8A8; font-style:normal; margin-bottom:16px; line-height:1.5; }
+  .obj-card .q::before{ content:"“"; color:var(--accent); font-family:var(--display); font-size:22px; }
+  .obj-card .a{ font-size:14px; color:var(--fg); border-top:1px solid var(--line); padding-top:16px; }
+  .obj-card .a b{ color:var(--accent); font-family:var(--mono); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:8px; }
+
+  /* ---------- como funciona ---------- */
+  .process{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .process-list{ margin-top:52px; border-top:1px solid var(--line); }
+  .step{
+    display:grid;
+    grid-template-columns:80px 1fr 1fr;
+    gap:24px;
+    padding:34px 0;
+    border-bottom:1px solid var(--line);
+    align-items:start;
+  }
+  @media (max-width:760px){
+    .step{ grid-template-columns:50px 1fr; }
+    .step .step-visual{ grid-column:1/-1; }
+  }
+  .step .num{ font-family:var(--mono); font-size:14px; color:var(--accent); padding-top:4px; }
+  .step h3{ font-size:19px; margin-bottom:8px; font-weight:600; }
+  .step p{ color:var(--muted); font-size:14px; max-width:420px; }
+  .step-visual{ font-family:var(--mono); font-size:12px; color:#6b6b6b; align-self:center; }
+  .code-chip{
+    display:inline-block;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    color:#9BB4E8;
+  }
+
+  /* ---------- prova tecnica ---------- */
+  .proof{ padding:96px 0; border-bottom:1px solid var(--line); background:var(--panel-2); }
+  .proof-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:64px;
+    align-items:center;
+    margin-top:48px;
+  }
+  @media (max-width:900px){ .proof-grid{ grid-template-columns:1fr; } }
+  .proof-stats{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .stat{ background:var(--bg); padding:26px; }
+  .stat .v{ font-family:var(--display); font-size:32px; font-weight:600; color:var(--fg); }
+  .stat .l{ font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-top:6px; }
+
+  /* ---------- oferta ---------- */
+  .offer{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .offer-card{
+    background:linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:48px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:48px;
+  }
+  @media (max-width:860px){ .offer-card{ grid-template-columns:1fr; padding:32px; } }
+  .price-row{ display:flex; align-items:baseline; gap:10px; margin:18px 0 6px; }
+  .price-row .amt{ font-family:var(--display); font-size:44px; font-weight:700; }
+  .price-row .per{ color:var(--muted); font-size:14px; }
+  .price-sub{ font-family:var(--mono); font-size:13px; color:#9BB4E8; margin-bottom:28px; }
+  .offer-list{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
+  .offer-list li{ display:flex; gap:10px; font-size:14px; color:#D4D4D4; }
+  .offer-list li svg{ flex-shrink:0; margin-top:2px; }
+  .guarantee{
+    background:rgba(0,85,255,0.06);
+    border:1px solid rgba(0,85,255,0.3);
+    border-radius:12px;
+    padding:22px;
+    display:flex;
+    gap:14px;
+    align-self:start;
+  }
+  .guarantee .t{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); margin-bottom:8px; }
+  .guarantee p{ font-size:13.5px; color:#C7C7C7; }
+
+  /* ---------- faq ---------- */
+  .faq{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .faq-list{ margin-top:44px; max-width:760px; }
+  .faq-item{ border-bottom:1px solid var(--line); }
+  .faq-q{
+    width:100%;
+    background:none;
+    border:none;
+    color:var(--fg);
+    text-align:left;
+    padding:24px 0;
+    font-family:var(--body);
+    font-size:16px;
+    font-weight:600;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+    gap:20px;
+  }
+  .faq-q .plus{ font-family:var(--mono); color:var(--accent); font-size:20px; transition:transform .25s ease; flex-shrink:0; }
+  .faq-item.open .plus{ transform:rotate(45deg); }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  .faq-a p{ padding-bottom:24px; color:var(--muted); font-size:14.5px; max-width:600px; }
+
+  /* ---------- cta final ---------- */
+  .final-cta{
+    padding:110px 0;
+    text-align:center;
+    background:radial-gradient(600px 300px at 50% 0%, var(--accent-dim), transparent 70%);
+  }
+  .final-cta h2{ font-size:clamp(28px,4vw,44px); margin-bottom:18px; }
+  .final-cta p{ color:#B5B5B5; max-width:480px; margin:0 auto 36px; font-size:16px; }
+
+  footer{ padding:40px 0; border-top:1px solid var(--line); }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+  footer .f-note{ font-family:var(--mono); font-size:12px; color:var(--muted); }
+
+  @media (max-width:640px){
+    .hero{ padding:64px 0 56px; }
+    .problem, .objections, .process, .proof, .offer, .faq{ padding:64px 0; }
+    .final-cta{ padding:72px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><span class="dot"></span>Studio VX</div>
+    <nav class="links">
+      <a href="#simulador">O problema</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#oferta">Investimento</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <div class="header-cta">
+      <a href="#oferta" class="btn btn-primary" style="padding:10px 18px; font-size:13px;">Quero ver meu site</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Sites para negócios do ABC Paulista</span>
+      <h1>Seu serviço é ótimo.<br>Seu site é que está te <em>escondendo</em> do Google.</h1>
+      <p class="lead">Quem já te conhece indica. Mas quem procura "oficina perto de mim" ou "clínica de estética" só encontra o seu concorrente. A gente resolve isso: sites rápidos, acháveis e feitos para virar orçamento no WhatsApp.</p>
+      <div class="hero-actions">
+        <a href="#oferta" class="btn btn-primary">
+          Quero ver o projeto do meu site
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#simulador" class="btn btn-ghost">Ver o problema na prática</a>
+      </div>
+      <span class="hero-note">// reunião de diagnóstico gratuita — sem compromisso</span>
+    </div>
+
+    <div class="device" id="hero-device">
+      <div class="device-bar">
+        <span></span><span></span><span></span>
+        <div class="device-url">
+          <span>seu-negocio.com.br</span>
+          <span id="load-badge" style="color:#555;">carregando…</span>
+        </div>
+      </div>
+      <div class="device-body">
+        <div class="load-row">
+          <span class="label">Tempo de carregamento</span>
+          <span class="value" id="load-value">0.0s</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" id="load-bar"></div></div>
+        <div class="metric-list">
+          <div class="metric"><div class="k">LCP</div><div class="v" id="m-lcp">—</div></div>
+          <div class="metric"><div class="k">CLS</div><div class="v" id="m-cls">—</div></div>
+          <div class="metric"><div class="k">Uptime</div><div class="v" id="m-up">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem" id="simulador">
+  <div class="wrap">
+    <div class="problem-head">
+      <span class="eyebrow">O que o cliente vê</span>
+      <h2>Antes de comprar, seu cliente pesquisa. E se você não aparece, ele nem sabe que existe.</h2>
+      <p>Simule uma busca real de alguém procurando um serviço como o seu, no Google, agora.</p>
+    </div>
+
+    <div class="simulator">
+      <div class="sim-toolbar">
+        <span class="q">Busca no Google: <b>"oficina mecânica perto de mim"</b></span>
+        <div class="toggle">
+          <button id="btn-antes" class="active">SEM STUDIO VX</button>
+          <button id="btn-depois">COM STUDIO VX</button>
+        </div>
+      </div>
+      <div class="sim-results" id="sim-results"></div>
+      <div class="sim-caption" id="sim-caption"></div>
+    </div>
+  </div>
+</section>
+
+<section class="objections">
+  <div class="wrap">
+    <span class="eyebrow">Direto ao ponto</span>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); margin-top:16px; max-width:600px;">As três coisas que todo cliente pergunta antes de fechar</h2>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <p class="q">Já paguei para fazerem um site antes e não me trouxe nenhum cliente.</p>
+        <div class="a"><b>Por que agora é diferente</b>Site bonito sem otimização para busca local é vitrine fechada. Aqui, cada página é construída para aparecer quando alguém pesquisa o seu serviço na sua região — não só para existir.</div>
+      </div>
+      <div class="obj-card">
+        <p class="q">Não entendo nada de tecnologia, gerenciar isso vai me dar dor de cabeça.</p>
+        <div class="a"><b>O que fica com você</b>Você não mexe em código, plugin ou hospedagem. A gente cuida da parte técnica; você só recebe os pedidos de orçamento no WhatsApp.</div>
+      </div>
+      <div class="obj-card">
+        <p class="q">Deve ser muito caro investir em um site profissional agora.</p>
+        <div class="a"><b>Como o investimento funciona</b>Setup a partir de R$ 900 + R$ 100/mês de infraestrutura e suporte. E se você não gostar do protótipo, o setup nem é cobrado.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="como-funciona">
+  <div class="wrap">
+    <span class="eyebrow">O caminho até o ar</span>
+    <h2 style="font-size:clamp(26px,3.4vw,38px); margin-top:16px; max-width:600px;">Quatro etapas, sem enrolação</h2>
+
+    <div class="process-list">
+      <div class="step">
+        <span class="num">01</span>
+        <div>
+          <h3>Diagnóstico do seu negócio</h3>
+          <p>Uma conversa curta para entender seu serviço, sua região e onde seus concorrentes estão te ganhando no Google.</p>
+        </div>
+        <div class="step-visual"><span class="code-chip">reuniao.diagnostico()</span></div>
+      </div>
+      <div class="step">
+        <span class="num">02</span>
+        <div>
+          <h3>Protótipo visual funcionando</h3>
+          <p>Você vê o site do seu negócio pronto, navegável, antes de decidir qualquer coisa.</p>
+        </div>
+        <div class="step-visual"><span class="code-chip">prototipo.render()</span></div>
+      </div>
+      <div class="step">
+        <span class="num">03</span>
+        <div>
+          <h3>Desenvolvimento e SEO local</h3>
+          <p>Estrutura de alta performance, otimizada para o Google te encontrar na sua cidade e região.</p>
+        </div>
+        <div class="step-visual"><span class="code-chip">build --optimize=local</span></div>
+      </div>
+      <div class="step">
+        <span class="num">04</span>
+        <div>
+          <h3>No ar, captando clientes</h3>
+          <p>Site publicado, indexado, e pronto para transformar busca em orçamento pelo WhatsApp.</p>
+        </div>
+        <div class="step-visual"><span class="code-chip">deploy → live</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <span class="eyebrow">Por trás do site</span>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); margin-top:16px; max-width:560px;">Performance não é promessa de vendedor. É engenharia.</h2>
+
+    <div class="proof-grid">
+      <div>
+        <p style="color:#B5B5B5; font-size:15px; max-width:440px; margin-bottom:8px;">
+          Cada site é construído sobre a mesma infraestrutura usada em plataformas de e-commerce próprias — testada em carga real de banco de dados, não em teoria. Feito por um analista de sistemas, focado em uma coisa: transformar visita em orçamento.
+        </p>
+      </div>
+      <div class="proof-stats">
+        <div class="stat"><div class="v">&lt;1s</div><div class="l">Tempo de abertura</div></div>
+        <div class="stat"><div class="v">100%</div><div class="l">Foco em conversão</div></div>
+        <div class="stat"><div class="v">Local</div><div class="l">SEO para sua região</div></div>
+        <div class="stat"><div class="v">0</div><div class="l">Dor de cabeça técnica</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="oferta">
+  <div class="wrap">
+    <span class="eyebrow">Investimento</span>
+    <h2 style="font-size:clamp(26px,3.4vw,38px); margin-top:16px; max-width:600px;">Um site que trabalha para atrair cliente, todos os dias</h2>
+
+    <div class="offer-card" style="margin-top:44px;">
+      <div>
+        <span class="eyebrow" style="color:#9BB4E8;">Site profissional + SEO local</span>
+        <div class="price-row">
+          <span class="amt">R$ 900</span>
+          <span class="per">setup, a partir de</span>
+        </div>
+        <div class="price-sub">+ R$ 100/mês — infraestrutura e suporte</div>
+
+        <ul class="offer-list">
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reunião de diagnóstico do seu negócio</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Protótipo visual antes de qualquer cobrança</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Site otimizado para busca local (SEO)</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Hospedagem, manutenção e suporte inclusos</li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Integração direta com WhatsApp</li>
+        </ul>
+
+        <a href="#" class="btn btn-primary">
+          Quero ver o projeto do meu site
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="guarantee">
+        <div>
+          <div class="t">Risco zero</div>
+          <p>Se você não gostar do design apresentado na reunião de protótipo, o setup não é cobrado. Simples assim — você só paga pelo que já viu funcionando.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="wrap">
+    <span class="eyebrow">Dúvidas comuns</span>
+    <h2 style="font-size:clamp(26px,3.4vw,38px); margin-top:16px; max-width:600px;">Perguntas frequentes</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q">Eu preciso escrever os textos do site?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Não. A gente estrutura os textos com base no diagnóstico do seu negócio. Você revisa e ajusta o que quiser, sem precisar escrever do zero.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como funciona a manutenção e a hospedagem?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Estão incluídas na mensalidade de R$ 100. Isso cobre hospedagem, atualizações e suporte técnico — você não precisa contratar nem gerenciar nada por fora.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Em quanto tempo o site fica pronto?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Depois da reunião de diagnóstico, você já vê um protótipo funcionando. O prazo exato de publicação é definido nessa conversa, de acordo com a complexidade do seu negócio.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center;">Comece pelo diagnóstico</span>
+    <h2 style="margin-top:16px;">Pare de perder cliente para quem só aparece antes de você no Google</h2>
+    <p>Reunião de diagnóstico gratuita. Você só decide depois de ver o protótipo do seu site funcionando.</p>
+    <a href="#oferta" class="btn btn-primary">
+      Quero ver o projeto do meu site
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="font-size:15px;"><span class="dot"></span>Studio VX</div>
+    <span class="f-note">Sites para negócios do ABC Paulista — feito para converter, não só para existir.</span>
+  </div>
+</footer>
+
+<script>
+  // ---- hero loading metric animation ----
+  function animateHero(){
+    const bar = document.getElementById('load-bar');
+    const val = document.getElementById('load-value');
+    const badge = document.getElementById('load-badge');
+    const lcp = document.getElementById('m-lcp');
+    const cls = document.getElementById('m-cls');
+    const up = document.getElementById('m-up');
+    let t = 0;
+    const target = 0.8;
+    bar.style.width = '92%';
+    const dur = 900;
+    const start = performance.now();
+    function step(ts){
+      const p = Math.min((ts - start)/dur, 1);
+      t = (target * p).toFixed(1);
+      val.textContent = t + 's';
+      if(p < 1){ requestAnimationFrame(step); }
+      else {
+        badge.textContent = 'carregado';
+        badge.style.color = '#22C55E';
+        lcp.textContent = '0.7s';
+        cls.textContent = '0.01';
+        up.textContent = '99.9%';
+      }
+    }
+    requestAnimationFrame(step);
+  }
+  window.addEventListener('load', () => setTimeout(animateHero, 300));
+
+  // ---- google search simulator (signature element) ----
+  const antesHTML = `
+    <div class="result">
+      <span class="rank">1</span>
+      <div><div class="rt">concorrenteA.com.br</div><div class="rh">Auto Center Silva — Mecânica Geral</div><div class="rd">★ 4.6 · Aberto agora · A 1,2 km</div></div>
+    </div>
+    <div class="result">
+      <span class="rank">2</span>
+      <div><div class="rt">concorrenteB.com.br</div><div class="rh">Oficina do João — Suspensão e Freios</div><div class="rd">★ 4.4 · Aberto agora · A 2,0 km</div></div>
+    </div>
+    <div class="result">
+      <span class="rank">3</span>
+      <div><div class="rt">concorrenteC.com.br</div><div class="rh">Mecânica Total Car</div><div class="rd">★ 4.2 · Fecha às 18h · A 2,8 km</div></div>
+    </div>
+    <div class="sim-missing">
+      <b>// seu-negocio.com.br</b>
+      <span>Não aparece nos primeiros resultados. Quem pesquisa nunca chega até aqui.</span>
+    </div>
+  `;
+
+  const depoisHTML = `
+    <div class="result you">
+      <span class="rank">1</span>
+      <div><div class="rt">seu-negocio.com.br<span class="tag">Você</span></div><div class="rh">Sua Oficina — Mecânica Especializada</div><div class="rd">★ 4.9 · Aberto agora · Orçamento pelo WhatsApp</div></div>
+    </div>
+    <div class="result">
+      <span class="rank">2</span>
+      <div><div class="rt">concorrenteA.com.br</div><div class="rh">Auto Center Silva — Mecânica Geral</div><div class="rd">★ 4.6 · Aberto agora · A 1,2 km</div></div>
+    </div>
+    <div class="result">
+      <span class="rank">3</span>
+      <div><div class="rt">concorrenteB.com.br</div><div class="rh">Oficina do João — Suspensão e Freios</div><div class="rd">★ 4.4 · Aberto agora · A 2,0 km</div></div>
+    </div>
+  `;
+
+  const results = document.getElementById('sim-results');
+  const caption = document.getElementById('sim-caption');
+  const btnAntes = document.getElementById('btn-antes');
+  const btnDepois = document.getElementById('btn-depois');
+
+  function setSim(state){
+    if(state === 'antes'){
+      results.innerHTML = antesHTML;
+      caption.innerHTML = '<span style="color:#8A8A8A;">Resultado real de quem pesquisa hoje: seu negócio não é encontrado.</span>';
+      btnAntes.classList.add('active');
+      btnDepois.classList.remove('active');
+    } else {
+      results.innerHTML = depoisHTML;
+      caption.innerHTML = '<span style="color:#22C55E;">Com SEO local aplicado: primeiro resultado, com WhatsApp direto.</span>';
+      btnDepois.classList.add('active');
+      btnAntes.classList.remove('active');
+    }
+  }
+  btnAntes.addEventListener('click', () => setSim('antes'));
+  btnDepois.addEventListener('click', () => setSim('depois'));
+  setSim('antes');
+
+  // ---- faq accordion ----
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        if(other !== item){
+          other.classList.remove('open');
+          other.querySelector('.faq-a').style.maxHeight = null;
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        a.style.maxHeight = null;
+      } else {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
