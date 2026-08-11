@@ -13,10 +13,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#000000;
+    --bg:#0A0C10;
     --fg:#F5F5F5;
-    --panel:#1A1A1A;
-    --panel-2:#141414;
+    --panel:#13151A;
+    --panel-2:#1A1C23;
     --line:#2A2A2A;
     --accent:#0055FF;
     --accent-dim: rgba(0,85,255,0.12);
@@ -393,36 +393,6 @@
   .stat .v{ font-family:var(--display); font-size:32px; font-weight:600; color:var(--fg); }
   .stat .l{ font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-top:6px; }
 
-  /* ---------- oferta ---------- */
-  .offer{ padding:96px 0; border-bottom:1px solid var(--line); }
-  .offer-card{
-    background:linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
-    border:1px solid var(--line);
-    border-radius:18px;
-    padding:48px;
-    display:grid;
-    grid-template-columns:1.2fr 1fr;
-    gap:48px;
-  }
-  @media (max-width:860px){ .offer-card{ grid-template-columns:1fr; padding:32px; } }
-  .price-row{ display:flex; align-items:baseline; gap:10px; margin:18px 0 6px; }
-  .price-row .amt{ font-family:var(--display); font-size:44px; font-weight:700; }
-  .price-row .per{ color:var(--muted); font-size:14px; }
-  .price-sub{ font-family:var(--mono); font-size:13px; color:#9BB4E8; margin-bottom:28px; }
-  .offer-list{ list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:32px; }
-  .offer-list li{ display:flex; gap:10px; font-size:14px; color:#D4D4D4; }
-  .offer-list li svg{ flex-shrink:0; margin-top:2px; }
-  .guarantee{
-    background:rgba(0,85,255,0.06);
-    border:1px solid rgba(0,85,255,0.3);
-    border-radius:12px;
-    padding:22px;
-    display:flex;
-    gap:14px;
-    align-self:start;
-  }
-  .guarantee .t{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); margin-bottom:8px; }
-  .guarantee p{ font-size:13.5px; color:#C7C7C7; }
 
   /* ---------- faq ---------- */
   .faq{ padding:96px 0; border-bottom:1px solid var(--line); }
@@ -466,10 +436,222 @@
   footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
   footer .f-note{ font-family:var(--mono); font-size:12px; color:var(--muted); }
 
+  /* ---------- glass / bento ---------- */
+  .glass-card{
+    background:rgba(255,255,255,0.03);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .glass-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(0,85,255,0.45);
+    box-shadow:0 20px 40px -20px rgba(0,85,255,0.35);
+  }
+
+  .obj-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    background:none;
+    border:none;
+    border-radius:0;
+    overflow:visible;
+    margin-top:48px;
+  }
+  @media (max-width:860px){ .obj-grid{ grid-template-columns:1fr; } }
+  .obj-card{ padding:32px; }
+
+  .process-list{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-top:52px;
+    border-top:none;
+  }
+  .step{
+    padding:28px;
+    border-bottom:none;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+  .step:nth-child(1),.step:nth-child(4){ grid-column:span 3; }
+  .step:nth-child(2),.step:nth-child(3){ grid-column:span 1; }
+  .step .step-visual{ margin-top:auto; }
+  @media (max-width:760px){
+    .process-list{ grid-template-columns:1fr; }
+    .step,.step:nth-child(1),.step:nth-child(4){ grid-column:1/-1; }
+  }
+
+  /* ---------- hero grid background ---------- */
+  .hero{ overflow:hidden; }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:radial-gradient(circle at 50% 30%, black 0%, transparent 65%);
+    -webkit-mask-image:radial-gradient(circle at 50% 30%, black 0%, transparent 65%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+
+  /* ---------- terminal eyebrow ---------- */
+  .eyebrow-terminal::after{
+    content:"";
+    width:7px;
+    height:13px;
+    background:var(--accent);
+    margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
+
+  /* ---------- marquee ---------- */
+  .marquee-section{
+    border-bottom:1px solid var(--line);
+    padding:22px 0;
+    overflow:hidden;
+    background:var(--panel-2);
+  }
+  .marquee-track{
+    display:flex;
+    width:max-content;
+    gap:56px;
+    animation:marquee-scroll 28s linear infinite;
+  }
+  .marquee-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--muted);
+    white-space:nowrap;
+    padding-right:56px;
+    border-right:1px solid var(--line);
+  }
+  .marquee-item svg{ flex-shrink:0; }
+  @keyframes marquee-scroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation:none; }
+  }
+
+  /* ---------- servicos / pricing ---------- */
+  .services{ padding:96px 0; border-bottom:1px solid var(--line); }
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-top:48px;
+    align-items:stretch;
+  }
+  @media (max-width:1000px){ .services-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:640px){ .services-grid{ grid-template-columns:1fr; } }
+
+  .service-card{
+    position:relative;
+    padding:30px 24px 24px;
+    display:flex;
+    flex-direction:column;
+  }
+  .service-card.featured{
+    border-color:var(--accent);
+    box-shadow:0 0 0 1px rgba(0,85,255,0.25), 0 30px 60px -30px rgba(0,85,255,0.55);
+  }
+  .service-tag{
+    position:absolute;
+    top:-13px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--accent);
+    color:#000;
+    font-family:var(--mono);
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.06em;
+    padding:5px 14px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .service-card h3{ font-size:19px; margin:8px 0 10px; }
+  .service-card p.desc{ font-size:13.5px; color:var(--muted); margin-bottom:18px; min-height:56px; }
+  .service-features{ list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:18px; }
+  .service-features li{ display:flex; gap:8px; font-size:13px; color:#D4D4D4; align-items:flex-start; }
+  .service-features li svg{ flex-shrink:0; margin-top:2px; }
+  .service-card hr{ border:none; border-top:1px solid rgba(255,255,255,0.08); margin:4px 0 16px; }
+  .common-label{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    opacity:.65;
+    margin-bottom:12px;
+    display:block;
+  }
+  .common-features{ list-style:none; display:flex; flex-direction:column; gap:9px; margin-bottom:22px; }
+  .common-features li{ display:flex; gap:8px; font-size:12.5px; color:#9A9A9A; align-items:flex-start; }
+  .common-features li svg{ flex-shrink:0; margin-top:2px; opacity:.6; }
+  .service-meta{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:#9BB4E8;
+    margin-bottom:22px;
+  }
+  .service-btn{
+    margin-top:auto;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--fg);
+    padding:12px 12px 12px 18px;
+    border-radius:10px;
+    font-family:var(--body);
+    font-weight:600;
+    font-size:13px;
+    text-align:left;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .service-btn:hover{ border-color:var(--accent); }
+  .service-card.featured .service-btn{
+    background:rgba(0,85,255,0.12);
+    border-color:var(--accent);
+  }
+  .arrow-circle{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:var(--accent);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+
   @media (max-width:640px){
     .hero{ padding:64px 0 56px; }
-    .problem, .objections, .process, .proof, .offer, .faq{ padding:64px 0; }
+    .problem, .objections, .process, .proof, .faq, .services{ padding:64px 0; }
     .final-cta{ padding:72px 0; }
+    .marquee-section{ padding:16px 0; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -486,11 +668,11 @@
     <nav class="links">
       <a href="#simulador">O problema</a>
       <a href="#como-funciona">Como funciona</a>
-      <a href="#oferta">Investimento</a>
+      <a href="#servicos">Serviços</a>
       <a href="#faq">Dúvidas</a>
     </nav>
     <div class="header-cta">
-      <a href="https://wa.me/5511966415434?text=Ol%C3%A1%2C%20quero%20ver%20o%20projeto%20do%20meu%20site" target="_blank" class="btn btn-primary" style="padding:10px 18px; font-size:13px;">Quero ver meu site</a>
+      <a href="#servicos" class="btn btn-primary" style="padding:10px 18px; font-size:13px;">Ver serviços</a>
     </div>
   </div>
 </header>
@@ -498,7 +680,7 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Sites para negócios do ABC Paulista</span>
+      <span class="eyebrow eyebrow-terminal">Sites para negócios do ABC Paulista</span>
       <h1>Seu serviço é ótimo.<br>Seu site é que está te <em>escondendo</em> do Google.</h1>
       <p class="lead">Quem já te conhece indica. Mas quem procura "oficina perto de mim" ou "clínica de estética" só encontra o seu concorrente. A gente resolve isso: sites rápidos, acháveis e feitos para virar orçamento no WhatsApp.</p>
       <div class="hero-actions">
@@ -535,6 +717,21 @@
   </div>
 </section>
 
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track" id="marquee-track">
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M9 1L3 9h4l-1 6 6-8H8l1-6z" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Carregamento &lt; 1s</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 00-5.6 9.8L1.5 14.5l3.3-.9A6.5 6.5 0 108 1.5z" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Integração WhatsApp</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 14.5S13 10 13 6.5a5 5 0 00-10 0C3 10 8 14.5 8 14.5z" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="6.5" r="1.6" stroke="#0055FF" stroke-width="1.3"/></svg>SEO Técnico</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="#0055FF" stroke-width="1.3"/><path d="M1.5 6h13" stroke="#0055FF" stroke-width="1.3"/></svg>Design Responsivo</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#0055FF" stroke-width="1.3"/><circle cx="8" cy="8" r="2.6" stroke="#0055FF" stroke-width="1.3"/><circle cx="8" cy="8" r="0.6" fill="#0055FF"/></svg>Foco em Conversão</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M9 1L3 9h4l-1 6 6-8H8l1-6z" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Carregamento &lt; 1s</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1.5a6.5 6.5 0 00-5.6 9.8L1.5 14.5l3.3-.9A6.5 6.5 0 108 1.5z" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Integração WhatsApp</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 14.5S13 10 13 6.5a5 5 0 00-10 0C3 10 8 14.5 8 14.5z" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="6.5" r="1.6" stroke="#0055FF" stroke-width="1.3"/></svg>SEO Técnico</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="#0055FF" stroke-width="1.3"/><path d="M1.5 6h13" stroke="#0055FF" stroke-width="1.3"/></svg>Design Responsivo</div>
+    <div class="marquee-item"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#0055FF" stroke-width="1.3"/><circle cx="8" cy="8" r="2.6" stroke="#0055FF" stroke-width="1.3"/><circle cx="8" cy="8" r="0.6" fill="#0055FF"/></svg>Foco em Conversão</div>
+  </div>
+</div>
+
 <section class="problem" id="simulador">
   <div class="wrap">
     <div class="problem-head">
@@ -563,15 +760,15 @@
     <h2 style="font-size:clamp(24px,3.2vw,32px); margin-top:16px; max-width:600px;">As três coisas que todo cliente pergunta antes de fechar</h2>
 
     <div class="obj-grid">
-      <div class="obj-card">
+      <div class="obj-card glass-card">
         <p class="q">Já paguei para fazerem um site antes e não me trouxe nenhum cliente.</p>
         <div class="a"><b>Por que agora é diferente</b>Site bonito sem otimização para busca local é vitrine fechada. Aqui, cada página é construída para aparecer quando alguém pesquisa o seu serviço na sua região — não só para existir.</div>
       </div>
-      <div class="obj-card">
+      <div class="obj-card glass-card">
         <p class="q">Não entendo nada de tecnologia, gerenciar isso vai me dar dor de cabeça.</p>
         <div class="a"><b>O que fica com você</b>Você não mexe em código, plugin ou hospedagem. A gente cuida da parte técnica; você só recebe os pedidos de orçamento no WhatsApp.</div>
       </div>
-      <div class="obj-card">
+      <div class="obj-card glass-card">
         <p class="q">Deve ser muito caro investir em um site profissional agora.</p>
         <div class="a"><b>Como o investimento funciona</b>O valor é apresentado na reunião de diagnóstico, junto com o protótipo do seu site, sob medida para o seu negócio. E se você não gostar do que ver, não paga nada pelo desenvolvimento.</div>
       </div>
@@ -585,7 +782,7 @@
     <h2 style="font-size:clamp(26px,3.4vw,38px); margin-top:16px; max-width:600px;">Quatro etapas, sem enrolação</h2>
 
     <div class="process-list">
-      <div class="step">
+      <div class="step glass-card">
         <span class="num">01</span>
         <div>
           <h3>Diagnóstico do seu negócio</h3>
@@ -593,7 +790,7 @@
         </div>
         <div class="step-visual"><span class="code-chip">reuniao.diagnostico()</span></div>
       </div>
-      <div class="step">
+      <div class="step glass-card">
         <span class="num">02</span>
         <div>
           <h3>Protótipo visual funcionando</h3>
@@ -601,7 +798,7 @@
         </div>
         <div class="step-visual"><span class="code-chip">prototipo.render()</span></div>
       </div>
-      <div class="step">
+      <div class="step glass-card">
         <span class="num">03</span>
         <div>
           <h3>Desenvolvimento e SEO local</h3>
@@ -609,7 +806,7 @@
         </div>
         <div class="step-visual"><span class="code-chip">build --optimize=local</span></div>
       </div>
-      <div class="step">
+      <div class="step glass-card">
         <span class="num">04</span>
         <div>
           <h3>No ar, captando clientes</h3>
@@ -642,38 +839,115 @@
   </div>
 </section>
 
-<section class="offer" id="oferta">
+<section class="services" id="servicos">
   <div class="wrap">
-    <span class="eyebrow">Investimento</span>
-    <h2 style="font-size:clamp(26px,3.4vw,38px); margin-top:16px; max-width:600px;">Um site que trabalha para atrair cliente, todos os dias</h2>
+    <span class="eyebrow">O que a gente entrega</span>
+    <h2 style="font-size:clamp(26px,3.4vw,38px); margin-top:16px; max-width:600px;">Um projeto para cada etapa do seu negócio</h2>
 
-    <div class="offer-card" style="margin-top:44px;">
-      <div>
-        <span class="eyebrow" style="color:#9BB4E8;">Site profissional + SEO local</span>
-        <h3 style="font-family:var(--display); font-size:28px; font-weight:600; margin:18px 0 10px; letter-spacing:-0.01em;">Projeto Sob Medida para o Seu Negócio</h3>
-        <div class="price-sub" style="margin-bottom:26px; line-height:1.6; font-family:var(--body); font-size:14.5px; color:#C7C7C7;">O valor do investimento é apresentado na reunião de diagnóstico, junto com o protótipo visual do seu site — sem compromisso. Cada projeto é dimensionado para o seu negócio no ABC Paulista, não um pacote fechado de prateleira.</div>
+    <div class="services-grid">
 
-        <ul class="offer-list">
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Reunião de diagnóstico do seu negócio</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Protótipo visual antes de qualquer cobrança</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Orçamento apresentado sem compromisso na reunião</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Site otimizado para busca local (SEO)</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Hospedagem, manutenção e suporte inclusos</li>
-          <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Integração direta com WhatsApp</li>
+      <div class="service-card glass-card">
+        <h3>Landing Page</h3>
+        <p class="desc">Página única voltada para conversão. Ideal para campanhas e lançamentos.</p>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>WhatsApp integrado, com rastreio de contatos</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Preparada para anúncios no Google e redes sociais</li>
         </ul>
-
-        <a href="https://wa.me/5511966415434?text=Ol%C3%A1%2C%20quero%20ver%20o%20projeto%20do%20meu%20site" target="_blank" class="btn btn-primary">
-          Quero ver o projeto do meu site
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <hr>
+        <span class="common-label">Em todo projeto</span>
+        <ul class="common-features">
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Estudo de mercado antes do projeto</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Design estratégico e textos persuasivos</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Carregamento rápido e ótima exibição no celular</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Otimização técnica para o Google (SEO) e para IA</li>
+        </ul>
+        <div class="service-meta">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="#0055FF" stroke-width="1.3"/><path d="M8 4.5V8l2.6 1.5" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Prazo: 5 a 10 dias
+        </div>
+        <a href="https://wa.me/5511966415434?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20uma%20Landing%20Page" target="_blank" class="service-btn">
+          <span>SOLICITAR ORÇAMENTO</span>
+          <span class="arrow-circle"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
       </div>
 
-      <div class="guarantee">
-        <div>
-          <div class="t">Risco zero</div>
-          <p>Se você não gostar do design apresentado na reunião de protótipo, o desenvolvimento não é cobrado. Simples assim — você só paga pelo que já viu funcionando.</p>
+      <div class="service-card glass-card featured">
+        <span class="service-tag">MAIS ESCOLHIDO</span>
+        <h3>Site Institucional</h3>
+        <p class="desc">Posiciona o seu negócio com autoridade e ajuda a ser encontrado no Google e na IA.</p>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Múltiplas páginas, sob medida para o seu negócio</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Painel próprio para você mesmo editar</li>
+        </ul>
+        <hr>
+        <span class="common-label">Em todo projeto</span>
+        <ul class="common-features">
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Estudo de mercado antes do projeto</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Design estratégico e textos persuasivos</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Carregamento rápido e ótima exibição no celular</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Otimização técnica para o Google (SEO) e para IA</li>
+        </ul>
+        <div class="service-meta">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="#0055FF" stroke-width="1.3"/><path d="M8 4.5V8l2.6 1.5" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Prazo: 10 a 20 dias
         </div>
+        <a href="https://wa.me/5511966415434?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20um%20Site%20Institucional" target="_blank" class="service-btn">
+          <span>SOLICITAR ORÇAMENTO</span>
+          <span class="arrow-circle"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
       </div>
+
+      <div class="service-card glass-card">
+        <h3>Loja Online</h3>
+        <p class="desc">Loja virtual completa para vender pela internet, com gestão de produtos, pedidos e pagamentos.</p>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Catálogo e carrinho de compras</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Pagamentos integrados</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Painel de estoque</li>
+        </ul>
+        <hr>
+        <span class="common-label">Em todo projeto</span>
+        <ul class="common-features">
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Estudo de mercado antes do projeto</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Design estratégico e textos persuasivos</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Carregamento rápido e ótima exibição no celular</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Otimização técnica para o Google (SEO) e para IA</li>
+        </ul>
+        <div class="service-meta">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="#0055FF" stroke-width="1.3"/><path d="M8 4.5V8l2.6 1.5" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Prazo: 15 a 30 dias
+        </div>
+        <a href="https://wa.me/5511966415434?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20uma%20Loja%20Online" target="_blank" class="service-btn">
+          <span>SOLICITAR ORÇAMENTO</span>
+          <span class="arrow-circle"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+
+      <div class="service-card glass-card">
+        <h3>Sistema Sob Medida</h3>
+        <p class="desc">Sistema ou aplicativo sob medida para o seu negócio, com painel administrativo completo.</p>
+        <ul class="service-features">
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>100% customizado para o seu processo</li>
+          <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#0055FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Integração com APIs e outros sistemas</li>
+        </ul>
+        <hr>
+        <span class="common-label">Em todo projeto</span>
+        <ul class="common-features">
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Análise de processos antes do desenvolvimento</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Painel de gestão completo</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Alta segurança e performance</li>
+          <li><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="#8A8A8A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Suporte contínuo</li>
+        </ul>
+        <div class="service-meta">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.2" stroke="#0055FF" stroke-width="1.3"/><path d="M8 4.5V8l2.6 1.5" stroke="#0055FF" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Prazo: conforme o escopo
+        </div>
+        <a href="https://wa.me/5511966415434?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20um%20Sistema%20Sob%20Medida" target="_blank" class="service-btn">
+          <span>SOLICITAR ORÇAMENTO</span>
+          <span class="arrow-circle"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#000" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -685,16 +959,28 @@
 
     <div class="faq-list">
       <div class="faq-item">
-        <button class="faq-q">Eu preciso escrever os textos do site?<span class="plus">+</span></button>
-        <div class="faq-a"><p>Não. A gente estrutura os textos com base no diagnóstico do seu negócio. Você revisa e ajusta o que quiser, sem precisar escrever do zero.</p></div>
+        <button class="faq-q">Como funciona o processo de ponta a ponta?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Tudo começa com um diagnóstico gratuito para entender o seu momento. Em seguida, desenho o escopo, defino os prazos e valores. Você fala diretamente comigo o tempo todo. Durante o desenvolvimento, temos etapas de revisão para garantir que o resultado fique exatamente como o planejado.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Como funciona a manutenção e a hospedagem?<span class="plus">+</span></button>
-        <div class="faq-a"><p>Estão incluídas em uma mensalidade de infraestrutura e suporte, apresentada junto com o restante do projeto na reunião de diagnóstico. Isso cobre hospedagem, atualizações e suporte técnico — você não precisa contratar nem gerenciar nada por fora.</p></div>
+        <button class="faq-q">O site fica no meu nome? Fico preso à agência?<span class="plus">+</span></button>
+        <div class="faq-a"><p>O site, o domínio e o código são 100% seus. Não existe taxa para "liberar" o que já é seu.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Em quanto tempo o site fica pronto?<span class="plus">+</span></button>
-        <div class="faq-a"><p>Depois da reunião de diagnóstico, você já vê um protótipo funcionando. O prazo exato de publicação é definido nessa conversa, de acordo com a complexidade do seu negócio.</p></div>
+        <button class="faq-q">Como funciona a segurança e formalização do projeto?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Zero informalidade. Trabalhamos com contrato claro detalhando prazos e escopo, e emissão de Nota Fiscal (Victor Xavier Cordeiro Machado, 64.556.190/0001-00). O padrão é 50% no início e 50% só na entrega.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Qual é o prazo médio de entrega?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Depende do escopo. Landing Pages levam de 5 a 10 dias úteis; Sites Institucionais de 10 a 20 dias. O prazo exato é cravado no contrato.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quais as formas de pagamento?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Dividimos em 50% de entrada e 50% na aprovação final. Também oferecemos a opção de parcelamento no cartão de crédito.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">O site tem suporte depois de ir ao ar?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Com certeza. Depois que o site estiver no ar, oferecemos pacotes de manutenção contínua para garantir que tudo continue rápido, seguro e atualizado.</p></div>
       </div>
     </div>
   </div>
